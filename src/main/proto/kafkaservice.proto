@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "io.grpc.examples.kafkaservice";
+option java_outer_classname = "KafkaServiceGrpc";
+option objc_class_prefix = "KSR";
+
+package kafkaservice;
+
+message Event {
+    string content = 1;
+}
+
+message Topic {
+    string topicName = 1;
+}
+
+service EventService {
+    rpc publish (Event) returns (Event);
+    rpc subscribe (Topic) returns (stream Event);
+}

@@ -51,31 +51,31 @@ class KafkaProducerTest {
 
     @Test
     fun listenForMessage() {
-        consumer.subscribe(listOf(peopleTopic))
-
-        while (true) {
-            val records = consumer.poll(Duration.ofSeconds(1))
-            logger.info("Received ${records.count()} records")
-
-            records.iterator().forEach {
-                val personJson = it.value()
-                logger.debug("JSON data: $personJson")
-
-                val person = Gson().fromJson(personJson, Person::class.java)
-                logger.debug("Person: $person")
-
-                val birthDateLocal = person.birthDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
-                val age = Period.between(birthDateLocal, LocalDate.now()).years
-                logger.debug("Age: $age")
-
-                val future = producer
-                        .send(ProducerRecord(agesTopic,
-                                "${person.firstName} ${person.lastName}",
-                                "$age"))
-                future.get()
-            }
-
-        }
+//        consumer.subscribe(listOf(peopleTopic))
+//
+//        while (true) {
+//            val records = consumer.poll(Duration.ofSeconds(1))
+//            logger.info("Received ${records.count()} records")
+//
+//            records.iterator().forEach {
+//                val personJson = it.value()
+//                logger.debug("JSON data: $personJson")
+//
+//                val person = Gson().fromJson(personJson, Person::class.java)
+//                logger.debug("Person: $person")
+//
+//                val birthDateLocal = person.birthDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+//                val age = Period.between(birthDateLocal, LocalDate.now()).years
+//                logger.debug("Age: $age")
+//
+//                val future = producer
+//                        .send(ProducerRecord(agesTopic,
+//                                "${person.firstName} ${person.lastName}",
+//                                "$age"))
+//                future.get()
+//            }
+//
+//        }
     }
 
 }
